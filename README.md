@@ -107,7 +107,8 @@ Go to App clients -> select **my-spa-app** -> Login pages and make sure you have
 - Logout URL:
   - `http://localhost:3000`
 
-* Note: this is the URL of local frontend. After finishing the development, you have to change with the one from Azure/AWS web apps.
+
+> **_NOTE:_** Note: this is the URL of local frontend. After finishing the development, you have to change with the one from Azure/AWS web apps.
 
 Record:
 - **App Client ID**
