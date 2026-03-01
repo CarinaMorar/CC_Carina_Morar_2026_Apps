@@ -1,4 +1,4 @@
-# Cloud Computing Lab TUCN - Cloud Computing
+# Cloud Computing Lab
 
 Student demo project for:
 
