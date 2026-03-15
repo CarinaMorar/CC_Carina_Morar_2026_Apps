@@ -13,6 +13,6 @@
   "type": "commonjs",
   "dependencies": {
     "jsonwebtoken": "^9.0.3",
-    "jwks-rsa": "^4.0.0"
+    "jwks-rsa": "^4.0.1"
   }
 }
