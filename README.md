@@ -312,6 +312,6 @@ Frontend app settings:
 - Port: `80`
 - Update frontend API base for production (not localhost)
 
-## License
+## License - 2
 
 This project is licensed under the MIT License. See [LICENSE](LICENSE).
