@@ -146,14 +146,14 @@ jobs:
           az webapp config container set \
             --name "${{ vars.AZURE_APP_SERVICE_NAME }}" \
             --resource-group "${{ vars.AZURE_RESOURCE_GROUP }}" \
-            --docker-custom-image-name "${{ secrets.DOCKERHUB_USERNAME }}/tucn-cc-frontend:${{ steps.tag.outputs.value }}"
+            --container-image-name "${{ secrets.DOCKERHUB_USERNAME }}/tucn-cc-frontend:${{ steps.tag.outputs.value }}"
 
       - name: Update Function App container image
         run: |
           az functionapp config container set \
             --name "${{ vars.AZURE_FUNCTION_APP_NAME }}" \
             --resource-group "${{ vars.AZURE_RESOURCE_GROUP }}" \
-            --docker-custom-image-name "${{ secrets.DOCKERHUB_USERNAME }}/tucn-cc-backend-api:${{ steps.tag.outputs.value }}"
+            --image "${{ secrets.DOCKERHUB_USERNAME }}/tucn-cc-backend-api:${{ steps.tag.outputs.value }}"
 
       - name: Restart services to pull new images
         run: |
