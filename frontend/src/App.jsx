@@ -173,13 +173,41 @@ function App() {
             </section>
 
             <section className="card card-wide">
-              <h2>Data API Response</h2>
+              <h2>Energy Usage Data</h2>
               {loadingData ? (
                 <p className="muted">Loading data...</p>
-              ) : dataResponse ? (
-                <pre className="code-block">{JSON.stringify(dataResponse, null, 2)}</pre>
+              ) : dataResponse && dataResponse.data && dataResponse.data.length > 0 ? (
+                <div className="table-container">
+                  <p className="status-line" style={{ marginBottom: "1rem" }}>
+                    Showing {dataResponse.data.length} records for role: <strong>{dataResponse.role}</strong>
+                  </p>
+                  <table className="data-table">
+                    <thead>
+                      <tr>
+                        <th>Device ID</th>
+                        <th>Location</th>
+                        <th>Timestamp</th>
+                        <th>kWh</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {/* Show only first 50 rows for performance if there are too many */}
+                      {dataResponse.data.slice(0, 50).map((row, idx) => (
+                        <tr key={idx}>
+                          <td>{row.device_id}</td>
+                          <td>{row.location}</td>
+                          <td>{new Date(row.timestamp).toLocaleString()}</td>
+                          <td>{row.kwh}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                  {dataResponse.data.length > 50 && (
+                    <p className="muted" style={{ marginTop: "0.5rem", fontSize: "0.85rem" }}>Showing first 50 records of {dataResponse.data.length} total.</p>
+                  )}
+                </div>
               ) : (
-                <p className="muted">No data loaded yet.</p>
+                <p className="muted">No data loaded or empty response.</p>
               )}
             </section>
           </div>

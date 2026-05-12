@@ -1,3 +1,5 @@
+const fs = require("fs");
+const path = require("path");
 const {
   authenticate,
   jsonResponseWithCorrelation,
@@ -6,10 +8,27 @@ const {
 } = require("../shared/auth");
 const { emit, finishRequest, maskDeviceId, startRequest } = require("../shared/logging");
 
-const allData = [
-  { device_id: "E-001", value: 10 },
-  { device_id: "E-002", value: 20 },
-];
+let allData = [];
+try {
+  const csvPath = path.join(__dirname, "energy_usage_large.csv");
+  const csvContent = fs.readFileSync(csvPath, "utf8");
+  const lines = csvContent.split(/\r?\n/).filter((line) => line.trim() !== "");
+  const headers = lines[0].split(",");
+
+  for (let i = 1; i < lines.length; i++) {
+    const values = lines[i].split(",");
+    if (values.length === headers.length) {
+      const entry = {};
+      for (let j = 0; j < headers.length; j++) {
+        entry[headers[j].trim()] = values[j].trim();
+      }
+      if (entry.kwh) entry.kwh = parseFloat(entry.kwh);
+      allData.push(entry);
+    }
+  }
+} catch (err) {
+  console.error("Failed to load CSV data:", err);
+}
 
 module.exports = async function data(context, req) {
   const request = startRequest(context, req, "/api/data");
